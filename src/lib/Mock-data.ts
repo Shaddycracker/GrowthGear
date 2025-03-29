@@ -1,0 +1,98 @@
+export const mockQueries = [
+    {
+        query: "Show me monthly sales for the past year",
+        results: {
+            type: "line",
+            title: "Monthly Sales (Past Year)",
+            description: "Sales data from March 2023 to February 2024",
+            sql: "SELECT DATE_TRUNC('month', order_date) as month, SUM(total_amount) as value FROM orders WHERE order_date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 year') GROUP BY month ORDER BY month",
+            data: [
+                { name: "Mar 2023", value: 45000 },
+                { name: "Apr 2023", value: 52000 },
+                { name: "May 2023", value: 49000 },
+                { name: "Jun 2023", value: 60000 },
+                { name: "Jul 2023", value: 55000 },
+                { name: "Aug 2023", value: 58000 },
+                { name: "Sep 2023", value: 62000 },
+                { name: "Oct 2023", value: 68000 },
+                { name: "Nov 2023", value: 72000 },
+                { name: "Dec 2023", value: 85000 },
+                { name: "Jan 2024", value: 65000 },
+                { name: "Feb 2024", value: 68000 },
+            ],
+        },
+    },
+    {
+        query: "What are our top 5 products by revenue?",
+        results: {
+            type: "bar",
+            title: "Top 5 Products by Revenue",
+            description: "Products generating the highest revenue",
+            sql: "SELECT p.product_name as name, SUM(oi.quantity * oi.unit_price) as value FROM order_items oi JOIN products p ON oi.product_id = p.id GROUP BY p.product_name ORDER BY value DESC LIMIT 5",
+            data: [
+                { name: "Premium Subscription", value: 120000 },
+                { name: "Enterprise License", value: 95000 },
+                { name: "Professional Services", value: 82000 },
+                { name: "Team Plan", value: 68000 },
+                { name: "Basic Subscription", value: 45000 },
+            ],
+        },
+    },
+    {
+        query: "Compare customer acquisition by region",
+        results: {
+            type: "pie",
+            title: "Customer Acquisition by Region",
+            description: "Distribution of new customers across regions",
+            sql: "SELECT region as name, COUNT(*) as value FROM customers WHERE created_at >= CURRENT_DATE - INTERVAL '6 months' GROUP BY region ORDER BY value DESC",
+            data: [
+                { name: "North America", value: 1200 },
+                { name: "Europe", value: 800 },
+                { name: "Asia Pacific", value: 650 },
+                { name: "Latin America", value: 450 },
+                { name: "Middle East & Africa", value: 300 },
+            ],
+        },
+    },
+    {
+        query: "What's our customer retention rate?",
+        results: {
+            type: "line",
+            title: "Customer Retention Rate (Past 12 Months)",
+            description: "Monthly retention rate of customers",
+            sql: "WITH monthly_stats AS (SELECT DATE_TRUNC('month', date) as month, COUNT(DISTINCT CASE WHEN is_active AND was_active_last_month THEN customer_id END) as retained, COUNT(DISTINCT CASE WHEN was_active_last_month THEN customer_id END) as total FROM customer_activity GROUP BY month) SELECT month as name, (retained::float / NULLIF(total, 0) * 100) as value FROM monthly_stats ORDER BY month",
+            data: [
+                { name: "Mar 2023", value: 92 },
+                { name: "Apr 2023", value: 91 },
+                { name: "May 2023", value: 93 },
+                { name: "Jun 2023", value: 90 },
+                { name: "Jul 2023", value: 89 },
+                { name: "Aug 2023", value: 91 },
+                { name: "Sep 2023", value: 92 },
+                { name: "Oct 2023", value: 94 },
+                { name: "Nov 2023", value: 93 },
+                { name: "Dec 2023", value: 95 },
+                { name: "Jan 2024", value: 94 },
+                { name: "Feb 2024", value: 93 },
+            ],
+        },
+    },
+    {
+        query: "Show me website traffic by source",
+        results: {
+            type: "bar",
+            title: "Website Traffic by Source",
+            description: "Distribution of website visitors by traffic source",
+            sql: "SELECT source as name, COUNT(*) as value FROM website_visits WHERE visit_date >= CURRENT_DATE - INTERVAL '30 days' GROUP BY source ORDER BY value DESC",
+            data: [
+                { name: "Organic Search", value: 45000 },
+                { name: "Direct", value: 32000 },
+                { name: "Social Media", value: 28000 },
+                { name: "Referral", value: 18000 },
+                { name: "Email", value: 12000 },
+                { name: "Paid Search", value: 9000 },
+            ],
+        },
+    },
+]
+
