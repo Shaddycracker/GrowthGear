@@ -14,7 +14,6 @@ const initialState: QueryState = {
     results: null,
     error: null,
 };
-
 export const processQuery = createAsyncThunk(
     'query/process',
     async (query: string, { rejectWithValue }) => {
@@ -30,7 +29,6 @@ export const processQuery = createAsyncThunk(
             if (matchedQuery) {
                 return matchedQuery.results;
             } else {
-                // Default results if no match
                 return mockQueries[0].results;
             }
         } catch (error) {

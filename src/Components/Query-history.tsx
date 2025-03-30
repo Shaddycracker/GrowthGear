@@ -1,67 +1,24 @@
-"use client"
-
-import { useState } from "react"
-// import { useToast } from "../hooks/use-toast.ts"
+// import { useState } from "react"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 import { Clock, Save, Trash } from "lucide-react"
 import { formatDistanceToNow } from "..//lib/utils"
 
-// In a real app, this would come from Redux
-const mockHistoryItems = [
-    {
-        id: "1",
-        query: "Show me monthly sales for the past year",
-        timestamp: "2023-03-28T10:30:00Z",
-        saved: true,
-    },
-    {
-        id: "2",
-        query: "What are our top 5 products by revenue?",
-        timestamp: "2023-03-27T15:45:00Z",
-        saved: false,
-    },
-    {
-        id: "3",
-        query: "Compare customer acquisition by region",
-        timestamp: "2023-03-26T09:15:00Z",
-        saved: true,
-    },
-    {
-        id: "4",
-        query: "What's our customer retention rate?",
-        timestamp: "2023-03-25T14:20:00Z",
-        saved: false,
-    },
-    {
-        id: "5",
-        query: "Show me website traffic by source",
-        timestamp: "2023-03-24T11:10:00Z",
-        saved: false,
-    },
-]
+import { useAppDispatch } from '../hooks/useAppDispatch.ts';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { saveQuery, deleteQuery } from '../store/Slices/historySlice.ts'
 
 export function QueryHistory() {
-    // const { toast } = useToast()
-    const [historyItems, setHistoryItems] = useState(mockHistoryItems)
 
+    const dispatch = useAppDispatch();
+    const historyItems = useAppSelector(state => state.history.items);
     const handleSaveQuery = (id: string) => {
-        setHistoryItems(historyItems.map((item) => (item.id === id ? { ...item, saved: true } : item)))
-
-        // toast({
-        //     title: "Query saved",
-        //     description: "You can access this query from your saved queries.",
-        // })
+        dispatch(saveQuery(id));
     }
 
     const handleDeleteQuery = (id: string) => {
-        setHistoryItems(historyItems.filter((item) => item.id !== id))
-
-        // toast({
-        //     title: "Query deleted",
-        //     description: "The query has been removed from your history.",
-        // })
+        dispatch(deleteQuery(id));
     }
 
     return (

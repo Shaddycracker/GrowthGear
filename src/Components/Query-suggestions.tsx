@@ -5,27 +5,22 @@ import { Button } from "./ui/button.tsx"
 interface QuerySuggestionsProps {
     onSelectSuggestion: (suggestion: string) => void
 }
+import {useAppSelector} from "../hooks/useAppSelector.ts";
 
 export function QuerySuggestions({ onSelectSuggestion }: QuerySuggestionsProps) {
-    const suggestions = [
-        "Show me monthly sales for the past year",
-        "What are our top 5 products by revenue?",
-        "Compare customer acquisition by region",
-        "What's our customer retention rate?",
-        "Show me website traffic by source",
-    ]
+    const suggestions = useAppSelector(state => state.history.items);
 
     return (
         <div className="flex flex-wrap gap-2">
             {suggestions.map((suggestion) => (
                 <Button
-                    key={suggestion}
+                    key={suggestion.id}
                     variant="outline"
                     size="sm"
-                    onClick={() => onSelectSuggestion(suggestion)}
+                    onClick={() => onSelectSuggestion(suggestion.query)}
                     className="text-xs"
                 >
-                    {suggestion}
+                    {suggestion.query}
                 </Button>
             ))}
         </div>

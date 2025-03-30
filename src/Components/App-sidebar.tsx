@@ -42,10 +42,10 @@ export function AppSidebar() {
 
     return (
         <Sidebar variant="inset">
-            <SidebarHeader className="flex h-16 items-center px-4">
+            <SidebarHeader className="flex h-16 justify-start">
                 <NavLink to="/" className="flex items-center gap-2 font-semibold">
                     <Database className="h-6 w-6 text-primary" />
-                    <span className="text-lg">GenAI Analytics</span>
+                    <span className="text-lg">GrowthGear</span>
                 </NavLink>
             </SidebarHeader>
             <SidebarSeparator />
@@ -79,7 +79,7 @@ export function AppSidebar() {
             <SidebarFooter className="p-4">
                 <div className="flex items-center gap-2 rounded-md bg-muted p-2 text-xs text-muted-foreground">
                     <BarChart3 className="h-4 w-4" />
-                    <span>Analytics v1.0</span>
+                    <span>GrowthGear v1.0</span>
                 </div>
             </SidebarFooter>
         </Sidebar>

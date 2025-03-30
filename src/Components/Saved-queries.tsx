@@ -1,43 +1,35 @@
-import { useState } from "react"
-// import { useToast } from "../hooks/use-toast.ts"
+import {useEffect, useState} from "react"
 import { Button } from "./ui/button.tsx"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 import { Clock, Play, Trash } from "lucide-react"
 import { formatDistanceToNow } from "../lib/utils.ts"
-
-// In a real app, this would come from Redux
-const mockSavedQueries = [
-    {
-        id: "1",
-        query: "Show me monthly sales for the past year",
-        timestamp: "2023-03-28T10:30:00Z",
-    },
-    {
-        id: "3",
-        query: "Compare customer acquisition by region",
-        timestamp: "2023-03-26T09:15:00Z",
-    },
-]
+import { useAppDispatch } from '../hooks/useAppDispatch.ts';
+import { useAppSelector } from '../hooks/useAppSelector';
+import {HistoryItem,unSaveQuery} from '../store/Slices/historySlice.ts'
+import {toast} from "react-toastify";
 
 export function SavedQueries() {
-    // const { toast } = useToast()
-    const [savedQueries, setSavedQueries] = useState(mockSavedQueries)
+    const [savedQueries, setSavedQueries] = useState<HistoryItem[]>([])
+    const  historyItems = useAppSelector(state => state.history.items);
+    const dispatch= useAppDispatch();
+
+    useEffect(() => {
+            setSavedQueries(historyItems.filter((item) => item.saved));
+    }, []);
+
 
     const handleRunQuery = (query: string) => {
         // In a real app with Redux:
         // dispatch(setCurrentQuery(query));
+        toast("working on It",{type:"info"});
         console.log("Running query:", query);
-        // router.push('/');
 
-        // toast({
-        //     title: "Query loaded",
-        //     description: "The query has been loaded to the dashboard.",
-        // })
     }
 
     const handleDeleteQuery = (id: string) => {
         setSavedQueries(savedQueries.filter((item) => item.id !== id))
+        dispatch(unSaveQuery(id))
 
         // toast({
         //     title: "Query deleted",

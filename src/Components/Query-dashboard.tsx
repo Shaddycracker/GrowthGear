@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState } from "react"
-// import { useToast } from "../hooks/use-toast.ts"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Input } from "./ui/Input"
@@ -12,23 +11,22 @@ import QueryResults  from "./Query-results.tsx"
 import { QuerySuggestions } from "./Query-suggestions.tsx"
 import { Loader2, Save, Send } from "lucide-react"
 import { mockQueries } from "../lib/Mock-data.ts"
+import {useAppDispatch} from "../hooks/useAppDispatch.ts";
+import {addQueryToHistory, saveQuery} from "../store/Slices/historySlice.ts";
+import {toast} from "react-toastify";
 
 export function QueryDashboard() {
-    // const { toast } = useToast()
     const [query, setQuery] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState<any | null>(null)
     const [activeTab, setActiveTab] = useState("results")
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         if (!query.trim()) {
-            // toast({
-            //     title: "Query is empty",
-            //     description: "Please enter a query to continue.",
-            //     variant: "destructive",
-            // })
+           toast("Please enter a query",{type:"error"});
             return
         }
 
@@ -47,36 +45,28 @@ export function QueryDashboard() {
                 setResults(mockQueries[0].results)
             }
 
+
+
             // Add to history (in a real app, this would be handled by Redux)
-            // const newQuery = {
-            //     id: Date.now().toString(),
-            //     query,
-            //     timestamp: new Date().toISOString(),
-            //     saved: false,
-            // }
-
-            // In a real app with Redux:
-            // dispatch(addQueryToHistory(newQuery));
-
+            const newQuery = {
+                id: Date.now().toString(),
+                query,
+                timestamp: new Date().toISOString(),
+                saved: false,
+            }
+            dispatch(addQueryToHistory(newQuery));
             setIsLoading(false)
-
-            // toast({
-            //     title: "Query processed",
-            //     description: "Your results are ready to view.",
-            // })
+            setQuery("")
+            toast("Query submitted",{type:"success"});
         }, 1500)
     }
 
-    const handleSaveQuery = () => {
+    const handleSaveQuery = (id:string) => {
         if (!query.trim()) return
+        dispatch(saveQuery(id))
+        toast("Query saved",{type:"success"});
 
-        // In a real app with Redux:
-        // dispatch(saveQuery({ query, results }));
 
-        // toast({
-        //     title: "Query saved",
-        //     description: "You can access this query from your saved queries.",
-        // })
     }
 
     return (
@@ -105,7 +95,7 @@ export function QueryDashboard() {
                                         type="button"
                                         size="sm"
                                         variant="ghost"
-                                        onClick={handleSaveQuery}
+                                        onClick={()=>{handleSaveQuery(Date.now().toString())}}
                                         disabled={isLoading || !query.trim()}
                                     >
                                         <Save className="h-4 w-4" />

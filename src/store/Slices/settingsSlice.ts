@@ -7,7 +7,7 @@ interface SettingsState {
     darkMode: boolean;
     notifications: boolean;
 }
-
+//  ignore this for now
 const initialState: SettingsState = {
     apiKey: "sk-••••••••••••••••••••••••",
     model: "gpt-4o",
