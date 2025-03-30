@@ -1,54 +1,92 @@
-# React + TypeScript + Vite
+---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Gen AI Growth Gear Analytics - Data Query Dashboard  
 
-Currently, two official plugins are available:
+## Overview  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is a **React TypeScript** application designed as a **Data Query Dashboard** for the **Gen AI Analytics tool**. The dashboard enables users to input natural language queries, process them, and visualize results using mock data. The project follows best practices for component structure, state management using **Redux**, and UI implementation using **ShadCN components**.  
 
-## Expanding the ESLint configuration
+## Features  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Natural Language Query Input**  
+- **Query Processing Simulation**  
+- **Query History Management**  
+- **Data Visualization with Charts**  
+- **State Management with Redux**  
+- **ShadCN UI Components for Modern Design**  
+- **Routing with React Router**  
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Tech Stack  
+
+- **React** with **TypeScript**  
+- **Redux** for state management  
+- **React Router** for navigation  
+- **ShadCN UI** for UI components  
+- **Tailwind CSS** for styling  
+- **Chart.js / Recharts** for data visualization  
+
+## Folder Structure  
+
+```
+src/  
+│── components/            # All UI and reusable components  
+│   ├── ui/                # ShadCN UI components  
+│   ├── QueryInput.tsx     # Input field with AI suggestions  
+│   ├── QueryHistory.tsx   # Displays previous queries  
+│   ├── ResultDisplay.tsx  # Shows query results with charts
+|   |.... more....
+│── hooks/                 # Custom hooks for state management  
+│   ├── useQuery.ts        # Handles query input and processing  
+│── store/                 # Redux store setup  
+│   ├── index.ts           # Root store configuration  
+│   ├── querySlice.ts (main)  # Reducer and actions for queries
+|-- lib/
+|   |- mockData
+|   |- utils
+│── App.tsx                # Defines all routes  
+│── main.tsx               # Entry point  
+│── index.css              # Global styles  
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Installation & Setup  
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Clone the repository**  
+   ```sh
+   git clone https://github.com/Shaddycracker/GrowthGear
+   cd project-folder
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+2. **Install dependencies**  
+   ```sh
+   npm install
+   ```
+
+3. **Run the project**  
+   ```sh
+   npm run dev
+   ```
+
+## Deployment  
+
+The project is hosted on **Vercel**. You can access the live version here:  
+[[Vercel Deployment Link]  ](https://growth-gear-navy.vercel.app/)
+
+## Approach  
+
+- Implemented **Redux Toolkit** for efficient state management.  
+- Used **ShadCN UI components** for a clean, modern interface.  
+- Managed routes using **React Router** to navigate between pages.  
+- Ensured **responsive design** with Tailwind CSS.  
+
+## Future Enhancements  
+
+- Implementing real-time query processing with an API  
+- Adding authentication for user sessions  
+- Improving AI-based query suggestions  
+
+## Contact  
+
+For any queries or improvements, feel free to connect.  
+
+Best,  
+Shadab Ali
